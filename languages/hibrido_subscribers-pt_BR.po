@@ -1,0 +1,46 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: hibrido-subscribers\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"X-Generator: Poedit 1.6.9\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Subscribers"
+msgstr "Assinantes"
+
+msgid "Download .csv"
+msgstr "Baixar .csv"
+
+msgid "No subscribers have been added to the list"
+msgstr "Nenhum assinante foi adicionado a lista"
+
+msgid "Sending ..."
+msgstr "Enviando ..."
+
+msgid "Your email was successfully added to our mailing list"
+msgstr "Seu email foi adicionado com sucesso em nossa lista"
+
+msgid "This email address was already added to our mailing list"
+msgstr "Este email já está em nossa lista"
+
+msgid "Please enter a valid email address"
+msgstr "Por favor digite um email válido"
+
+msgid "Please enter your email address"
+msgstr "Por favor digite seu email"
+
+msgid "Incorrect nonce"
+msgstr "Nonce incorreto"
+
+msgid "Id"
+msgstr "ID"
+
+msgid "Email"
+msgstr "Email"
