@@ -16,16 +16,43 @@ load_plugin_textdomain(HIBRIDO_SUBSCRIBERS_TEXT_DOMAIN, false, dirname(plugin_ba
 
 class HibridoSubscribers
 {
+    /**
+     *
+     */
     const VERSION = '0.1.0';
+    /**
+     *
+     */
     const DB_VERSION = 1;
 
+    /**
+     *
+     */
     const AJAX_ACTION           = 'hibrido_subscribers_ajax_action';
+    /**
+     *
+     */
     const AJAX_OBJECT           = 'hibrido_subscribers_ajax_object';
+    /**
+     *
+     */
     const AJAX_NONCE            = 'hibrido_subscribers_ajax_nonce';
+    /**
+     *
+     */
     const AJAX_CAP              = 'hibrido_subscribers_ajax_cap';
+    /**
+     *
+     */
     const AJAX_MENU_SLUG        = 'hibrido_subscribers_ajax_menu_slug';
+    /**
+     *
+     */
     const AJAX_SUBMENU_CSV_SLUG = 'hibrido_subscribers_ajax_submenu_csv_slug';
 
+    /**
+     *
+     */
     const NOTICE_ERROR = 'hibrido_subscribers_notice_error';
 
     /**
@@ -77,6 +104,9 @@ class HibridoSubscribers
 
         // mostra notificações se tiver alguma
         add_action('admin_notices', array($this, 'showNotices'));
+
+        // adiciona automaticamente endereços de email que enviaram mensagens pelo wp_mail
+        add_action('wp_mail', array($this, 'ninjaAddFromWpMail'));
     }
 
     /**
@@ -348,9 +378,47 @@ class HibridoSubscribers
     {
         global $wpdb;
 
-        $rows = $wpdb->get_results('select * from ' . $this->tableName, OBJECT);
+        $rows = $wpdb->get_results('select * from '. $this->tableName .' order by id desc', OBJECT);
 
         return $wpdb->num_rows > 0 ? $rows : false;
+    }
+
+    /**
+     * @param $data
+     * @return mixed
+     */
+    public function ninjaAddFromWpMail($data)
+    {
+        if ( ! empty($data['headers']) && is_array($data['headers'])) {
+            $headers = $data['headers'];
+
+            foreach ($headers as $header) {
+                if (false === stripos($header, 'Reply-to:') && false === stripos($header, 'From:')) {
+                    continue;
+                }
+
+                $email = preg_replace(array('#reply-to:#i', '#from:#i'), '', $header);
+                $email = trim($email);
+
+
+                if (false !== stripos($email, '<') && false !== stripos($email, '>')) {
+                    $email = preg_replace(array('#(.*)<#i', '#>(.*)#i'), '', $email);
+                }
+
+
+                $email = sanitize_email($email);
+
+                if ( ! is_email($email)) {
+                    continue;
+                }
+
+                $this->add($email);
+            }
+        }
+
+        // retornamos o argumento, pois, esse método é ligado
+        // a um filtro e não a uma action
+        return $data;
     }
 }
 
