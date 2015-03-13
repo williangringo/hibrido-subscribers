@@ -291,36 +291,29 @@ class HibridoSubscribers
      */
     public function respond()
     {
-        if (isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], self::AJAX_NONCE)) {
-            if (isset($_POST['email'])) {
-                if (is_email($_POST['email'])) {
-                    if ($this->add($_POST['email'])) {
-                        $respond = array(
-                            'success' => true,
-                            'msg' => __('Your email was successfully added to our mailing list', HIBRIDO_SUBSCRIBERS_TEXT_DOMAIN)
-                        );
-                    } else {
-                        $respond = array(
-                            'success' => false,
-                            'msg' => __('This email address was already added to our mailing list', HIBRIDO_SUBSCRIBERS_TEXT_DOMAIN)
-                        );
-                    }
+        if (isset($_POST['email'])) {
+            if (is_email($_POST['email'])) {
+                if ($this->add($_POST['email'])) {
+                    $respond = array(
+                        'success' => true,
+                        'msg' => __('Your email was successfully added to our mailing list', HIBRIDO_SUBSCRIBERS_TEXT_DOMAIN)
+                    );
                 } else {
                     $respond = array(
                         'success' => false,
-                        'msg' => __('Please enter a valid email address', HIBRIDO_SUBSCRIBERS_TEXT_DOMAIN)
+                        'msg' => __('This email address was already added to our mailing list', HIBRIDO_SUBSCRIBERS_TEXT_DOMAIN)
                     );
                 }
             } else {
                 $respond = array(
                     'success' => false,
-                    'msg' => __('Please enter your email address', HIBRIDO_SUBSCRIBERS_TEXT_DOMAIN)
+                    'msg' => __('Please enter a valid email address', HIBRIDO_SUBSCRIBERS_TEXT_DOMAIN)
                 );
             }
         } else {
             $respond = array(
                 'success' => false,
-                'msg' => __('Incorrect nonce', HIBRIDO_SUBSCRIBERS_TEXT_DOMAIN)
+                'msg' => __('Please enter your email address', HIBRIDO_SUBSCRIBERS_TEXT_DOMAIN)
             );
         }
 
