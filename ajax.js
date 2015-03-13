@@ -12,8 +12,7 @@ jQuery(document).ready(function ($) {
 
     $form.ajaxForm({
         data: {
-            action: hibrido_subscribers_ajax_object.action,
-            nonce: hibrido_subscribers_ajax_object.nonce
+            action: hibrido_subscribers_ajax_object.action
         },
         dataType: 'json',
         beforeSend: function () {
